@@ -1,4 +1,7 @@
-name = print(input('Hello world! \nWhat\'s your name? '))
+# Reverse Cipher
+
+print('Hello world! \nWhat\'s your name? ', end='')
+name = input()
 print('Its is good to meet you, {}.\n'.format(name))
 
 message = 'Three can keep a secret, if two of them are dead.'
