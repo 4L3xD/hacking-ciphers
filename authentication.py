@@ -1,73 +1,109 @@
 # Authentication
-import pyperclip
 
-user_db = []
-lenght_user_db = int(len(user_db))
+db = []
 
-password_db = []
-lenght_password_db = int(len(password_db))
+id = len(db) 
+user_name = ''
+password = ''
 
-def authentication():
-    again = False
+user = (id, user_name, password)
 
+again = True
+
+def hello_world():
     print('='*60 + '\n{:-^60}'.format('Authentica'))
-    print('\nHello! Do you want to joke of criptograph? Y/n')
-    joke = input()
+    joke = input('\nHello! Do you want to joke of criptograph? y/n\n')
+    # try:
+    #     if joke != 'y' or joke != 'n':
+    #         print('Enter a valid answer! (y or n)')
+    # except ValueError:
+    #     print('Ops! Something wrong is not right!')
+
     if joke == 'y':
         print('Let\'s go!\n')
-        again = True
-    else:
-        print('See you later!')
+        start()
+    elif joke == 'n':
+        print('See you later!\n')
 
-    while again == True:
+def start():
+    is_first = input('That\'s your first time here? y/n\n')
+    # try:
+    #     if is_first != 'y' or is_first != 'n':  
+    #         print('Enter a valid answer! (y or n)') 
+    # except ValueError:  
+    #     print('Ops! Something wrong is not right!') 
 
-        print('That\'s your first time here? Y/n')
-        is_first = input()
-        if is_first == 'y':
-            first = True
-        elif is_first == 'n':
-            first = False
+    if is_first == 'y':
+        first = True
+    elif is_first == 'n':
+        first = False
 
-        if first == True:
-            print('\nSign up! Type your user name: ')
-            user = input()
-            user_db.insert(lenght_user_db+1, user)
-            print('Enter your password: ')
-            password = input()
-            password_db.insert(lenght_password_db+1, password)
+    if first == True:
+        signUp()
 
-            first = False
-            signIn()
+        first = False
+        
+    if first == False:
+        signIn()
 
-        else:
-            signIn()
+def authentication():
+        start()
+        signUp()
+        signIn()
 
-        print('Continue (y/N)?')
-        answer = input()
-        if answer == 'n':
-            again = False
-        elif answer =='y':
-            again = True
+def continue_program():
+    answer = input('\nContinue (y/n)?\n')
+    # try:
+    #     if answer != 'y' or answer != 'n':  
+    #         print('Enter a valid answer! (y or n)') 
+    # except ValueError:  
+    #     print('Ops! Something wrong is not right!') 
+    
+    if answer =='y':
+        authentication()
+
+def signUp():    
+    user_exists = True
+    while user_exists == True:
+        user_name = input('\nSign up! Type your user name: ')
+
+        user_exists = False
+        for i in range(len(db)):
+            if user_name == db[i][1]:
+                user_exists = True
+                print('User already exists!')
+                print('Please, enter a valid name.')
+                break
+    print('Registered name!\nNow let\'s set a password for your security!')
+
+    password = input('Enter your password: ')
+    db.insert(len(db), (id+1, user_name, password))
 
 def signIn():
     print('\nSign in!')
-    user = input('Type your user name: ')
-    for user_name in range(len(user_db)):
-        if user == user_db[user_name]:
-            user_acess = True
-        else:
-            print('User not found!')
-    if user_acess == True:
-        print('Enter your password:')
-        password = input()
-        for user_password in range(len(password_db)):
-            if password == password_db[user_password]:
-                password_acess = True
-                welcome()                    
-        if password_acess == False:
-            print('Incorrect password!')
+    user_acess = False
+    password_acess = False
 
+    while user_acess == False: 
+        user_name = input('Type your user name: ')
+        for i in range(len(db)):
+            if user_name == db[i][1]:
+                user_acess = True
+
+                while password_acess == False:
+                    password = input('Enter your password:')
+                    if password == db[i][2]:
+                        password_acess = True
+                        welcome()                    
+                    if password_acess == False:
+                        print('Incorrect password!\n')
+                break
+        if user_acess != True:
+            print('\nUser not found!\n')
+    
 def welcome():
-    print('Welcome!')
+    print('\nWelcome!\n')
+    continue_program()
 
+hello_world()
 authentication()
