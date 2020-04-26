@@ -8,8 +8,6 @@ password = ''
 
 user = (id, user_name, password)
 
-again = True
-
 def hello_world():
     print('='*60 + '\n{:-^60}'.format('Authentica'))
     joke = input('\nHello! Do you want to joke of criptograph? y/n\n')
@@ -20,10 +18,11 @@ def hello_world():
     #     print('Ops! Something wrong is not right!')
 
     if joke == 'y':
-        print('Let\'s go!\n')
+        print('\nLet\'s go!\n')
         start()
-    elif joke == 'n':
-        print('See you later!\n')
+    if joke == 'n':
+        print('\nSee you later!\n')
+        exit()
 
 def start():
     is_first = input('That\'s your first time here? y/n\n')
@@ -40,9 +39,7 @@ def start():
 
     if first == True:
         signUp()
-
         first = False
-        
     if first == False:
         signIn()
 
@@ -62,7 +59,8 @@ def continue_program():
     if answer =='y':
         authentication()
 
-def signUp():    
+def signUp():
+
     user_exists = True
     while user_exists == True:
         user_name = input('\nSign up! Type your user name: ')
@@ -71,10 +69,10 @@ def signUp():
         for i in range(len(db)):
             if user_name == db[i][1]:
                 user_exists = True
-                print('User already exists!')
-                print('Please, enter a valid name.')
+                print('\nUser already exists!')
+                print('\nPlease, enter a valid name.')
                 break
-    print('Registered name!\nNow let\'s set a password for your security!')
+    print('\nRegistered name!\n\nNow let\'s set a password for your security!')
 
     password = input('Enter your password: ')
     db.insert(len(db), (id+1, user_name, password))
@@ -83,9 +81,11 @@ def signIn():
     print('\nSign in!')
     user_acess = False
     password_acess = False
+    attempts = 0
 
     while user_acess == False: 
         user_name = input('Type your user name: ')
+
         for i in range(len(db)):
             if user_name == db[i][1]:
                 user_acess = True
@@ -96,10 +96,15 @@ def signIn():
                         password_acess = True
                         welcome()                    
                     if password_acess == False:
-                        print('Incorrect password!\n')
+                        print('\nIncorrect password!\n')
                 break
         if user_acess != True:
             print('\nUser not found!\n')
+            attempts += 1
+
+            if attempts == 3:
+                print('\nAttempted limit exceeded!\n')
+                signUp()
     
 def welcome():
     print('\nWelcome!\n')
