@@ -58,14 +58,16 @@ def continue_program():
     
     if answer =='y':
         authentication()
+    else:
+        exit()
 
 def signUp():
-
     user_exists = True
+
     while user_exists == True:
+        user_exists = False
         user_name = input('\nSign up! Type your user name: ')
 
-        user_exists = False
         for i in range(len(db)):
             if user_name == db[i][1]:
                 user_exists = True
@@ -78,10 +80,12 @@ def signUp():
     db.insert(len(db), (id+1, user_name, password))
 
 def signIn():
-    print('\nSign in!')
     user_acess = False
     password_acess = False
-    attempts = 0
+    attempts_userName = 0
+    attempted_password = 0
+    
+    print('\nSign in!')
 
     while user_acess == False: 
         user_name = input('Type your user name: ')
@@ -97,12 +101,15 @@ def signIn():
                         welcome()                    
                     if password_acess == False:
                         print('\nIncorrect password!\n')
+                        attempted_password += 1 
+                        if attempted_password == 3:
+                            print('\nDid you forget your password?!\n')
                 break
         if user_acess != True:
             print('\nUser not found!\n')
-            attempts += 1
+            attempts_userName += 1
 
-            if attempts == 3:
+            if attempts_userName == 3:
                 print('\nAttempted limit exceeded!\n')
                 signUp()
     
