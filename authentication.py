@@ -10,19 +10,20 @@ user = (id, user_name, password)
 
 def hello_world():
     print('='*60 + '\n{:-^60}'.format('Authentica'))
-    joke = input('\nHello! Do you want to joke of criptograph? y/n\n')
+    joke = input('\nHello! Do you want to joke of criptograph? y/n\n').strip().lower()[0]
+    while joke not in 'YyNn':
+        joke = input('\nInvalid data! Do you want to joke of criptograph? y/n\n').strip().lower()[0]       
+    if joke in 'Ss':
+        print('\nLet\'s go!\n')
+        start()
+    if joke in 'Nn':
+        print('\nSee you later!\n')
+        exit()
     # try:
     #     if joke != 'y' or joke != 'n':
     #         print('Enter a valid answer! (y or n)')
     # except ValueError:
     #     print('Ops! Something wrong is not right!')
-
-    if joke == 'y':
-        print('\nLet\'s go!\n')
-        start()
-    if joke == 'n':
-        print('\nSee you later!\n')
-        exit()
 
 def start():
     is_first = input('That\'s your first time here? y/n\n')
